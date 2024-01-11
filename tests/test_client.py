@@ -1,7 +1,8 @@
 """Module for client tests."""
 import responses
-from src import client
+from src.app import client
 from unittest.mock import patch
+
 
 @responses.activate
 def test_make_request(mock_os_getenv):
@@ -19,7 +20,7 @@ def test_make_request(mock_os_getenv):
 
 
 @responses.activate
-@patch("src.client.logger")
+@patch("src.app.client.logger")
 def test_check_response(mock_logger):
     responses.add(
         responses.GET,
