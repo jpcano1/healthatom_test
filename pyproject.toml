@@ -17,6 +17,7 @@ mypy = ">=1.7.1,<1.8.0"
 isort = ">=5.11.4,<5.12.0"
 pydocstyle = ">=6.2.3,<6.3.0"
 python-dotenv = "^1.0.0"
+types-requests = "^2.31.0.20240106"
 
 [build-system]
 requires = ["poetry-core"]

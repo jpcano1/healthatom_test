@@ -4,7 +4,6 @@ from loguru import logger
 import os
 import requests
 from requests.adapters import HTTPAdapter
-from typing import Any
 from urllib3.util.retry import Retry
 
 BASE_URL = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"
@@ -30,7 +29,7 @@ def get_adapter(total_retry: int = 3, read_retry: int = 20, connect_retry: int =
     return HTTPAdapter(max_retries=retry_strategy)
 
 
-def make_request(currency: str, query_date: str, timeout: int = 10) -> dict[str, Any]:
+def make_request(currency: str, query_date: str, timeout: int = 10):
     """
     Make a request to the API and return the currency obtained.
 
@@ -53,9 +52,9 @@ def make_request(currency: str, query_date: str, timeout: int = 10) -> dict[str,
     }
 
     with requests.Session() as session:
-        session.mount("https://", adapter)  # type: ignore
-        session.mount("http://", adapter)  # type: ignore
-        response = session.post(  # type: ignore
+        session.mount("https://", adapter)
+        session.mount("http://", adapter)
+        response = session.post(
             BASE_URL,
             headers=headers,
             timeout=timeout,
