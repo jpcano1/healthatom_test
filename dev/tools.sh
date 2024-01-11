@@ -8,6 +8,10 @@ VOLUME="$(pwd):/app"
 # Variables for directory structure.
 REPO_ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+# parse arguments.
+cmd=$1
+shift
+
 case ${cmd} in
     h | help)
         # self-print to stdout.
@@ -26,24 +30,24 @@ case ${cmd} in
     l | linters)
         echo "Running linters on Docker image: ${DOCKER_IMAGE_NAME}"
         echo -e "\nChecking black format..."
-        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" black --check --diff --color ${SRC_DIR} ${TESTS_DIR}
+        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "black --check --diff --color ${SRC_DIR} ${TESTS_DIR}"
         echo -e "\nRunning flake8..."
-        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" flake8 ${SRC_DIR}
+        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "flake8 ${SRC_DIR}"
         echo -e "\nRunning mypy..."
-        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" mypy ${SRC_DIR}
+        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "mypy ${SRC_DIR}"
         echo -e "\nRunning isort..."
-        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" isort ${SRC_DIR} ${TESTS_DIR} --check
+        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "isort ${SRC_DIR} ${TESTS_DIR} --check"
         echo -e "\nRunning PydocStyle..."
-        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" pydocstyle ${SRC_DIR}
+        docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "pydocstyle ${SRC_DIR}"
         ;;
 
     t | tests)
         echo "Build Docker image: ${IMAGE_NAME}"
         if [[ -z "${TARGET_COV}" ]]; then
             echo "Running without coverage"
-            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests
+            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "pytest --cov=./${SRC_DIR}"
         else
-            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests --cov-fail-under=${TARGET_COV}
+            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "pytest --cov=./${SRC_DIR} --cov-fail-under=${TARGET_COV}"
         fi
         ;;
 
