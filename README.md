@@ -54,3 +54,6 @@ or you can change the currency value by `EUR`.
 - You can change the currency values in the docker-compose.yml file
 - Enjoy!
 
+## **Disclaimer**
+- **API USED**: [Banco Central de Chile](https://si3.bcentral.cl/indicadoressiete/secure/indicadoresdiarios.aspx)
+
