@@ -28,3 +28,7 @@ jobs:
       - name: Run Linters.
         run: ./dev/tools.sh l
         if: always()
+
+      - name: Run tests.
+        run: ./dev/tools t
+        if: always()

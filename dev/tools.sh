@@ -45,9 +45,9 @@ case ${cmd} in
         echo "Build Docker image: ${IMAGE_NAME}"
         if [[ -z "${TARGET_COV}" ]]; then
             echo "Running without coverage"
-            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests
+            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests"
         else
-            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests --cov-fail-under=${TARGET_COV}
+            docker run -v "${VOLUME}" --rm "${IMAGE_NAME}":"${IMAGE_TAG}" "pytest --cov=./${SRC_DIR} ./${SRC_DIR}/tests --cov-fail-under=${TARGET_COV}"
         fi
         ;;
 
