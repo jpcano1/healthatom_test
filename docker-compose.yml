@@ -30,7 +30,7 @@ services:
       - postgres
     networks:
       - "healthatom_test"
-    command: make retrieve_currency
+    command: make retrieve_currency CURRENCY=USD
     volumes:
       - .:/app
 
