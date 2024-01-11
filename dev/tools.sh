@@ -8,6 +8,10 @@ VOLUME="$(pwd):/app"
 # Variables for directory structure.
 REPO_ROOT_DIR="$(git rev-parse --show-toplevel)"
 
+# parse arguments.
+cmd=$1
+shift
+
 case ${cmd} in
     h | help)
         # self-print to stdout.
