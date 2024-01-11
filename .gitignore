@@ -72,3 +72,6 @@ venv/
 # Env variables
 ./env_variables
 .env
+
+# SQLite data
+*.db

@@ -1,7 +1,9 @@
 """Module for client tests."""
+from src.app import client
+
 import responses
-from src import client
 from unittest.mock import patch
+
 
 @responses.activate
 def test_make_request(mock_os_getenv):
@@ -12,14 +14,14 @@ def test_make_request(mock_os_getenv):
         status=200,
     )
 
-    result = client.make_request("usd", query_date="2024-01-01")
+    result = client.make_request("USD", query_date="2024-01-01")
 
     assert result == {"your": "response"}
     assert len(responses.calls) == 1
 
 
 @responses.activate
-@patch("src.client.logger")
+@patch("src.app.client.logger")
 def test_check_response(mock_logger):
     responses.add(
         responses.GET,
@@ -28,6 +30,6 @@ def test_check_response(mock_logger):
         status=400,
     )
 
-    _ = client.make_request("usd", query_date="2024-01-01")
+    _ = client.make_request("USD", query_date="2024-01-01")
 
     assert mock_logger.error.called

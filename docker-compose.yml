@@ -1,0 +1,45 @@
+services:
+  postgres:
+    image: postgres:10.1-alpine
+    container_name: postgres
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=healthatom_test
+      - PGDATA=/data/postgres
+    ports:
+      - "5432:5432"
+    restart: "unless-stopped"
+    networks:
+      - "healthatom_test"
+    volumes:
+      - local_postgres_data:/var/lib/postgresql/data
+      - local_postgres_data_backups:/backups
+
+  app:
+    image: healthatom_test:dev
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - ENV=dev
+    env_file:
+      - .env.local
+    depends_on:
+      - postgres
+    networks:
+      - "healthatom_test"
+    command: make retrieve_currency CURRENCY=USD
+    volumes:
+      - .:/app
+
+networks:
+  healthatom_test:
+    name: "healthatom_test"
+
+volumes:
+  local_postgres_data:
+    name: "local_postgres_data"
+  local_postgres_data_backups:
+    name: "local_postgres_data_backups"
