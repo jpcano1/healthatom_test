@@ -43,7 +43,7 @@ def make_request(currency: str, query_date: str, timeout: int = 20):
     """
     adapter = get_adapter()
 
-    time_series = "F073.TCO.PRE.Z.D" if currency == "usd" else "F072.CLP.EUR.N.O.D"
+    time_series = "F073.TCO.PRE.Z.D" if currency == "USD" else "F072.CLP.EUR.N.O.D"
 
     params = {
         "user": os.getenv("API_USER"),
@@ -61,7 +61,6 @@ def make_request(currency: str, query_date: str, timeout: int = 20):
             BASE_URL, timeout=timeout, hooks={"response": check_response}, params=params
         )
 
-        logger.info("Hola Mundo")
         return response.json()
 
 
